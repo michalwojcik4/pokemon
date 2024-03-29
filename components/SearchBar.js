@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button } from "react-native";
+import { useDispatch } from "react-redux";
+// import { searchPokemon } from "../redux/operations";
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSearch = () => {
+    // dispatch(searchPokemon(keyword));
     console.log(keyword);
   };
 
