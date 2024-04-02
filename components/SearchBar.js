@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button } from "react-native";
 import { useDispatch } from "react-redux";
-import { fetchPokemonToName } from "../redux/operations";
+import { fetchPokemonToName, fetchPokemonList } from "../redux/operations";
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
   const dispatch = useDispatch();
 
   const handleSearch = () => {
-    dispatch(fetchPokemonToName(keyword.toLowerCase()));
+    if (keyword.trim() === "") {
+      // Jeśli keyword jest pusty, wywołaj fetchPokemonList
+      dispatch(fetchPokemonList());
+    } else {
+      // W przeciwnym razie, wywołaj fetchPokemonToName z keyword
+      dispatch(fetchPokemonToName(keyword.toLowerCase()));
+    }
   };
 
   return (

@@ -23,7 +23,7 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.pokemonsList = action.payload;
+        state.pokemonsList = [...state.pokemonsList, ...action.payload];
         state.pokemonDetails = null;
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {

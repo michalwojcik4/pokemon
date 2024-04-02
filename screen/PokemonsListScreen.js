@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,10 +14,17 @@ import SearchBar from "../components/SearchBar";
 const PokemonsListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { pokemonsList } = useSelector((state) => state.pokemons);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchPokemonList());
-  }, [dispatch]);
+    dispatch(fetchPokemonList(page));
+  }, [dispatch, page]);
+
+  const handleEndReached = () => {
+    if (pokemonsList.length >= 2) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const pokemonItem = ({ item }) => (
     <TouchableOpacity
@@ -27,8 +34,15 @@ const PokemonsListScreen = ({ navigation }) => {
       }
     >
       <Image style={styles.image} source={{ uri: item.image }} />
+      <Text>{item.name}</Text>
     </TouchableOpacity>
   );
+
+  // Mam problem z filtrowaniem elemntów przed dodaniem do pokemonsList, aby nie dodawały się już istniejące
+  const generateId = () => {
+    return Math.random().toString(36).substr(2, 9); // Generujemy losowy identyfikator
+  };
+  //
 
   return (
     <View style={styles.container}>
@@ -36,8 +50,9 @@ const PokemonsListScreen = ({ navigation }) => {
       <FlatList
         data={pokemonsList}
         renderItem={pokemonItem}
-        keyExtractor={(item) => item.url}
-        numColumns={2}
+        keyExtractor={() => generateId()}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.1}
       />
     </View>
   );
