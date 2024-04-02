@@ -1,22 +1,27 @@
-import { StyleSheet, View } from "react-native";
-import SearchBar from "./components/SearchBar";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import PokemonList from "./components/PokemonList";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import HomeScreen from "./screen/HomeScreen";
+import PokemonsListScreen from "./screen/PokemonsListScreen";
+import PokemonDetailsScreen from "./screen/PokemonDetailsScreen";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <SearchBar />
-        <PokemonList />
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="PokemonsList" component={PokemonsListScreen} />
+          <Stack.Screen
+            name="PokemonDetails"
+            component={PokemonDetailsScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-  },
-});

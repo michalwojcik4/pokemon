@@ -1,37 +1,60 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fechPokemons, searchPokemon } from "./operations";
+import {
+  fetchPokemonList,
+  fetchPokemonDetails,
+  fetchPokemonToName,
+} from "./operations";
 
-const initialState = { isLoading: false, pokemons: [], error: null };
+const initialState = {
+  isLoading: false,
+  pokemonsList: [],
+  pokemonDetails: null,
+  error: null,
+};
 
 const pokemonSlice = createSlice({
   name: "pokemons",
   initialState: initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fechPokemons.pending, (state, action) => {
+      .addCase(fetchPokemonList.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fechPokemons.fulfilled, (state, action) => {
+      .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.pokemons = action.payload;
+        state.pokemonsList = action.payload;
+        state.pokemonDetails = null;
       })
-      .addCase(fechPokemons.rejected, (state, action) => {
+      .addCase(fetchPokemonList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchPokemonDetails.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPokemonDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.pokemonDetails = action.payload;
+      })
+      .addCase(fetchPokemonDetails.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchPokemonToName.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPokemonToName.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.pokemonsList = action.payload;
+        state.pokemonDetails = null;
+      })
+      .addCase(fetchPokemonToName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
-    // .addCase(searchPokemon.pending, (state, action) => {
-    //   state.isLoading = true;
-    // })
-    // .addCase(searchPokemon.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   state.pokemons = action.payload;
-    // })
-    // .addCase(searchPokemon.rejected, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // });
   },
 });
 

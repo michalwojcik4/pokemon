@@ -1,17 +1,33 @@
 import React, { useEffect } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View } from "react-native";
-import { fechPokemons } from "../redux/operations";
+import { fetchPokemonList } from "../redux/operations";
 
 const PokemonList = () => {
   const dispatch = useDispatch();
-  const pokemons = useSelector((state) => state.pokemons.pokemons);
+  const { pokemonList } = useSelector((state) => state.pokemons);
 
   useEffect(() => {
-    dispatch(fechPokemons());
+    dispatch(fetchPokemonList());
   }, [dispatch]);
 
-  return console.log(pokemons.results);
+  return (
+    <View>
+      <FlatList
+        data={pokemonList}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("PokemonDetails", { pokemonUrl: item.url })
+            }
+          >
+            <Text key={item.name}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.name}
+      />
+    </View>
+  );
 };
 
 export default PokemonList;
