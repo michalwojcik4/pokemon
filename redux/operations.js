@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Dodałbym to do .env, ale przy tym API wydaje mi się to zbędne
 axios.defaults.baseURL = " https://pokeapi.co/api/v2";
 
 export const fetchPokemonList = createAsyncThunk(
