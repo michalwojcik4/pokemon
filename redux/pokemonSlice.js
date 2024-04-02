@@ -29,6 +29,7 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.pokemonsList = [];
       })
       .addCase(fetchPokemonDetails.pending, (state) => {
         state.isLoading = true;
@@ -41,6 +42,7 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.pokemonDetails = null;
       })
       .addCase(fetchPokemonToName.pending, (state) => {
         state.isLoading = true;
@@ -54,6 +56,7 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonToName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.pokemonsList = [];
       });
   },
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 
 import LogoPokemon from "../images/pngegg.png";
+import colors from "../constants/colors";
 
 const CustomButton = ({ title, onPress }) => {
   return (
@@ -28,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: colors.background,
   },
   flex: {
     width: "80%",
@@ -41,12 +42,12 @@ const styles = StyleSheet.create({
     height: "50%",
   },
   button: {
-    backgroundColor: "yellow",
+    backgroundColor: colors.secondary,
     padding: 30,
     borderRadius: 5,
   },
   buttonText: {
-    color: "navy",
+    color: colors.blackText,
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
